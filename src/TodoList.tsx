@@ -35,18 +35,33 @@ import { useForm } from "react-hook-form";
 
 function ToDolist() {
   //watch는 form의 입력값된 값의 변화를 관찰할 수 있게 해주는 함수임.
-  const { register, watch } = useForm();
-  console.log(watch());
+  const { register, handleSubmit, formState } = useForm();
+  const onValid = (data: any) => {
+    console.log(data);
+  };
+  console.log(formState.errors);
   return (
     <div>
-      <form>
+      <form
+        style={{ display: "flex", flexDirection: "column" }}
+        onSubmit={handleSubmit(onValid)}
+      >
         {/* register 함수가 반환하는 객체를 가져다가 input의 props주는 형태임. */}
-        <input {...register("Email")} placeholder="Email"></input>
+        <input
+          {...register("Email", { required: true, minLength: 10 })}
+          placeholder="Email"
+        ></input>
         <input {...register("firstName")} placeholder="firstName"></input>
         <input {...register("lastName")} placeholder="lastName"></input>
         <input {...register("username")} placeholder="username"></input>
         <input {...register("password")} placeholder="password"></input>
-        <input {...register("password1")} placeholder="password1"></input>
+        <input
+          {...register("password1", {
+            required: "Password is required",
+            minLength: { value: 5, message: "your password is too short!" },
+          })}
+          placeholder="password1"
+        ></input>
         <button>Add</button>
       </form>
     </div>
