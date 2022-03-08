@@ -1,5 +1,21 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import styled from "styled-components";
+const Input = styled.input`
+  :focus {
+    outline-color: red;
+  }
+`;
+
+interface IForm {
+  email: string;
+  firstName: string;
+  lastName?: string;
+  username: string;
+  password: string;
+  password1: string;
+}
+
 /*function ToDolist() {
   const [toDo, setToDo] = useState("");
   const [toDoError, setToDoError] = useState("");
@@ -35,11 +51,19 @@ import { useForm } from "react-hook-form";
 
 function ToDolist() {
   //watch는 form의 입력값된 값의 변화를 관찰할 수 있게 해주는 함수임.
-  const { register, handleSubmit, formState } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IForm>({
+    defaultValues: {
+      email: "@naver.com",
+    },
+  });
   const onValid = (data: any) => {
     console.log(data);
   };
-  console.log(formState.errors);
+  console.log(errors);
   return (
     <div>
       <form
@@ -47,11 +71,22 @@ function ToDolist() {
         onSubmit={handleSubmit(onValid)}
       >
         {/* register 함수가 반환하는 객체를 가져다가 input의 props주는 형태임. */}
-        <input
-          {...register("Email", { required: true, minLength: 10 })}
+        <Input
+          {...register("email", {
+            required: "이메일을 입력해주세요",
+            pattern: {
+              value: /^[A-Za-z0-9._%+-]+@naver.com/,
+              message: "Only naver.com emails allowed",
+            },
+          })}
           placeholder="Email"
-        ></input>
+        ></Input>
+        <span style={{ color: "white" }}>
+          {/* {errors.Email?.type === "pattern" && "Only naver.com emails allowed"} */}
+          {errors?.email?.message}
+        </span>
         <input {...register("firstName")} placeholder="firstName"></input>
+
         <input {...register("lastName")} placeholder="lastName"></input>
         <input {...register("username")} placeholder="username"></input>
         <input {...register("password")} placeholder="password"></input>
