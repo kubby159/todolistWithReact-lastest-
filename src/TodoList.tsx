@@ -14,40 +14,8 @@ interface IForm {
   username: string;
   password: string;
   password1: string;
+  extraError?: string;
 }
-
-/*function ToDolist() {
-  const [toDo, setToDo] = useState("");
-  const [toDoError, setToDoError] = useState("");
-
-  const onChange = (event: React.FormEvent<HTMLInputElement>) => {
-    const {
-      currentTarget: { value },
-    } = event;
-    setToDoError("");
-    setToDo(value);
-  };
-
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (toDo.length < 10) {
-      return setToDoError("To do should be longer");
-    }
-  };
-  return (
-    <div>
-      <form onSubmit={onSubmit}>
-        <input
-          placeholder="Write a to do"
-          onChange={onChange}
-          value={toDo}
-        ></input>
-        <button>Add</button>
-        {toDoError !== "" ? toDoError : null}
-      </form>
-    </div>
-  );
-}*/
 
 function ToDolist() {
   //watch는 form의 입력값된 값의 변화를 관찰할 수 있게 해주는 함수임.
@@ -55,14 +23,20 @@ function ToDolist() {
     register,
     handleSubmit,
     formState: { errors },
+    setError,
   } = useForm<IForm>({
     defaultValues: {
       email: "@naver.com",
     },
   });
-  const onValid = (data: any) => {
-    console.log(data);
+  const onValid = (data: IForm) => {
+    if (data.password !== data.password1) {
+      setError("password1", { message: "Password are not the same" });
+    }
+    //ExtraError는 form 전체에 적용되는 에러임.
+    setError("extraError", { message: "Server offline." });
   };
+
   console.log(errors);
   return (
     <div>
@@ -87,10 +61,12 @@ function ToDolist() {
         </span>
         <input
           {...register("firstName", {
-            required: "Please write your FirstName here",
-            minLength: {
-              value: 5,
-              message: "Your password is too short.",
+            required: "write here",
+            validate: {
+              noNico: (value) =>
+                value.includes("nico") ? "no nicos allowed" : true,
+              noMay: (value) =>
+                value.includes("may") ? "no may allowed" : true,
             },
           })}
           placeholder="firstName"
@@ -99,7 +75,13 @@ function ToDolist() {
 
         <input {...register("lastName")} placeholder="lastName"></input>
         <input {...register("username")} placeholder="username"></input>
-        <input {...register("password")} placeholder="password"></input>
+        <input
+          {...register("password", {
+            required: "Write Here",
+            minLength: 5,
+          })}
+          placeholder="password"
+        ></input>
         <input
           {...register("password1", {
             required: "Password is required",
@@ -107,7 +89,9 @@ function ToDolist() {
           })}
           placeholder="password1"
         ></input>
+        <span> {errors.password1?.message}</span>
         <button>Add</button>
+        <span>{errors.extraError?.message}</span>
       </form>
     </div>
   );
