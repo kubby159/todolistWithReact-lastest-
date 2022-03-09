@@ -87,7 +87,7 @@ function ToDolist() {
         </span>
         <input
           {...register("firstName", {
-            required: true,
+            required: "Please write your FirstName here",
             minLength: {
               value: 5,
               message: "Your password is too short.",
@@ -95,6 +95,7 @@ function ToDolist() {
           })}
           placeholder="firstName"
         ></input>
+        <span>{errors.firstName?.message} </span>
 
         <input {...register("lastName")} placeholder="lastName"></input>
         <input {...register("username")} placeholder="username"></input>
