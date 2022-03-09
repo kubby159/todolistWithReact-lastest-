@@ -85,7 +85,16 @@ function ToDolist() {
           {/* {errors.Email?.type === "pattern" && "Only naver.com emails allowed"} */}
           {errors?.email?.message}
         </span>
-        <input {...register("firstName")} placeholder="firstName"></input>
+        <input
+          {...register("firstName", {
+            required: true,
+            minLength: {
+              value: 5,
+              message: "Your password is too short.",
+            },
+          })}
+          placeholder="firstName"
+        ></input>
 
         <input {...register("lastName")} placeholder="lastName"></input>
         <input {...register("username")} placeholder="username"></input>
