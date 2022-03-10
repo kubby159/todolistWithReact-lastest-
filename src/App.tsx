@@ -1,5 +1,5 @@
 import { createGlobalStyle } from "styled-components";
-import ToDolist from "./TodoList";
+import ToDoList from "./components/ToDoList";
 
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap');
@@ -56,13 +56,13 @@ table {
 }
 body {
   font-family: 'Source Sans Pro', sans-serif;
-  background-color:${(props) => props.theme.bgColor};
+  
   
   
 }
 a {
   text-decoration:none;
-  color: ${(props) => props.theme.textColor};
+  
 }
 
 `;
@@ -71,7 +71,7 @@ function App() {
   return (
     <>
       <GlobalStyle />
-      <ToDolist />
+      <ToDoList />
     </>
   );
 }
