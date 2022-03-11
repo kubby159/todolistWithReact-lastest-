@@ -19,7 +19,6 @@ const ToDoHead = styled.span`
   font-size: 42px;
   font-weight: 700;
   text-align: center;
-  border-bottom: 1px solid darkgray;
 `;
 
 const ToDoUl = styled.ul`
@@ -35,7 +34,7 @@ function ToDoList() {
 
   return (
     <ToDoContainer>
-      <ToDoHead>To Dos</ToDoHead>
+      <ToDoHead>TO DO LIST</ToDoHead>
       <CreateToDo />
       <ToDoUl>
         {toDos.map((toDo) => (
