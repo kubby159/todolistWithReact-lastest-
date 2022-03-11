@@ -18,7 +18,6 @@ interface IToDo {
 
 const toDoState = atom<IToDo[]>({ key: "toDO", default: [] });
 
-console.log({ text: "hello", category: "lalal" });
 function ToDoList() {
   const [toDos, setToDos] = useRecoilState(toDoState);
 
@@ -30,7 +29,7 @@ function ToDoList() {
     ]);
     setValue("toDo", "");
   };
-  ss;
+
   return (
     <div>
       <h1>To Dos</h1>
