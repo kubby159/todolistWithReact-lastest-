@@ -1,7 +1,11 @@
 import { IToDo } from "./atoms";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
+import {
+  faCheckCircle,
+  faPenToSquare,
+} from "@fortawesome/free-regular-svg-icons";
+import { faCheck, faRunning } from "@fortawesome/free-solid-svg-icons";
 
 const TodoList = styled.li`
   padding-bottom: 2rem;
@@ -13,18 +17,21 @@ const TodoBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid #000;
+  border: 1px solid transparent;
   border-radius: 8px;
-  padding: 4px;
+  padding: 14px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 `;
 
 const TodoBtnBox = styled.div``;
 
 const ToDoBtn = styled.button`
-  border: 1px solid #000;
+  border: 1px solid transparent;
   border-radius: 50%;
   padding: 12px;
-  margin-left: 2px;
+  margin-left: 4px;
+  font-size: 14px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 `;
 
 const TodoToDo = styled(ToDoBtn)`
@@ -43,10 +50,14 @@ function ToDo({ text, id }: IToDo) {
       <TodoBox>
         {text}
         <TodoBtnBox>
-          <TodoToDo>To Do</TodoToDo>
-          <TodoDoing>Doing</TodoDoing>
+          <TodoToDo>
+            <FontAwesomeIcon icon={faPenToSquare}></FontAwesomeIcon>
+          </TodoToDo>
+          <TodoDoing>
+            <FontAwesomeIcon icon={faRunning}></FontAwesomeIcon>
+          </TodoDoing>
           <TodoDone>
-            <FontAwesomeIcon icon={{fa-faCheckCircle}}></FontAwesomeIcon>
+            <FontAwesomeIcon icon={faCheck}></FontAwesomeIcon>
           </TodoDone>
         </TodoBtnBox>
       </TodoBox>
