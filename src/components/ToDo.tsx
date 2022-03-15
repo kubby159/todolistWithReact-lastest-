@@ -1,4 +1,4 @@
-import { IToDo } from "./atoms";
+import { IToDo, toDoState } from "./atoms";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -6,6 +6,7 @@ import {
   faPenToSquare,
 } from "@fortawesome/free-regular-svg-icons";
 import { faCheck, faRunning } from "@fortawesome/free-solid-svg-icons";
+import { useSetRecoilState } from "recoil";
 
 const TodoList = styled.li`
   padding-bottom: 2rem;
@@ -46,21 +47,34 @@ const TodoDone = styled(ToDoBtn)`
   background-color: #41c301;
 `;
 
-function ToDo({ text, id }: IToDo) {
+function ToDo({ text, id, category }: IToDo) {
+  const setToDos = useSetRecoilState(toDoState);
+  const onClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const {
+      currentTarget: { name },
+    } = event;
+  };
   return (
     <TodoList key={id}>
       <TodoBox>
         {text}
         <TodoBtnBox>
-          <TodoToDo>
-            <FontAwesomeIcon icon={faPenToSquare}></FontAwesomeIcon>
-          </TodoToDo>
-          <TodoDoing>
-            <FontAwesomeIcon icon={faRunning}></FontAwesomeIcon>
-          </TodoDoing>
-          <TodoDone>
-            <FontAwesomeIcon icon={faCheck}></FontAwesomeIcon>
-          </TodoDone>
+          {category !== "DOING" && (
+            <TodoToDo name="DOING" onClick={onClick}>
+              <FontAwesomeIcon icon={faRunning}></FontAwesomeIcon>
+            </TodoToDo>
+          )}
+
+          {category !== "TO_DO" && (
+            <TodoDoing name="TO_DO" onClick={onClick}>
+              <FontAwesomeIcon icon={faPenToSquare}></FontAwesomeIcon>
+            </TodoDoing>
+          )}
+          {category !== "DONE" && (
+            <TodoDone name="DONE" onClick={onClick}>
+              <FontAwesomeIcon icon={faCheck}></FontAwesomeIcon>
+            </TodoDone>
+          )}
         </TodoBtnBox>
       </TodoBox>
     </TodoList>
