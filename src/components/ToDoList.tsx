@@ -40,7 +40,7 @@ function ToDoList() {
       <ToDoUl>
         {toDos.map((toDo) => (
           // <ToDo text={toDo.text} category={toDo.category} id={toDo.id} />
-          <ToDo {...toDo} />
+          <ToDo key={toDo.id} {...toDo} />
         ))}
       </ToDoUl>
     </ToDoContainer>

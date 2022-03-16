@@ -57,7 +57,7 @@ function ToDo({ text, id, category }: IToDo) {
       const targetIndex = oldToDos.findIndex((toDo) => toDo.id === id);
       const oldToDo = oldToDos[targetIndex];
       const newToDo = { text, id, category: name };
-      console.log(oldToDos, newToDo);
+
       return oldToDos;
     });
   };
