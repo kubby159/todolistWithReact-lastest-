@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { toDoState } from "./atoms";
+import { toDoSelector, toDoState } from "./atoms";
 import CreateToDo from "./CreateToDo";
 import ToDo from "./ToDo";
 import styled from "styled-components";
@@ -30,19 +30,36 @@ const ToDoUl = styled.ul`
 `;
 
 function ToDoList() {
-  const toDos = useRecoilValue(toDoState);
-  console.log(toDos);
+  const [toDo, doing, done] = useRecoilValue(toDoSelector);
 
   return (
     <ToDoContainer>
       <ToDoHead>TO DO LIST</ToDoHead>
       <CreateToDo />
+      <h2>To Do</h2>
       <ToDoUl>
-        {toDos.map((toDo) => (
+        {toDo.map((toDo) => (
           // <ToDo text={toDo.text} category={toDo.category} id={toDo.id} />
           <ToDo key={toDo.id} {...toDo} />
         ))}
       </ToDoUl>
+      <hr />
+      <h2>Doing</h2>
+      <ToDoUl>
+        {doing.map((toDo) => (
+          // <ToDo text={toDo.text} category={toDo.category} id={toDo.id} />
+          <ToDo key={toDo.id} {...toDo} />
+        ))}
+      </ToDoUl>
+      <hr />
+      <h2>Done</h2>
+      <ToDoUl>
+        {done.map((toDo) => (
+          // <ToDo text={toDo.text} category={toDo.category} id={toDo.id} />
+          <ToDo key={toDo.id} {...toDo} />
+        ))}
+      </ToDoUl>
+      <hr />
     </ToDoContainer>
   );
 }
